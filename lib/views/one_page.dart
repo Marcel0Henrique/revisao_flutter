@@ -11,22 +11,34 @@ class OnePage extends StatefulWidget {
 }
 
 class _OnePageState extends State<OnePage> {
-  int valorAleatorio = 0;
+  ValueNotifier<int> valorAleatorio = ValueNotifier<int>(0);
 
   random() async {
     for (var i = 0; i < 10; i++) {
-      Future.delayed(Duration(seconds: 1));
-      valorAleatorio = Random().nextInt(1000);
+      await Future.delayed(Duration(seconds: 1));
+
+      valorAleatorio.value = Random().nextInt(1000);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Build");
     return Scaffold(
       body: Center(
-        child: CustomButtom(
-          onPressed: () {},
-          title: "Custom BTN",
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ValueListenableBuilder(
+              valueListenable: valorAleatorio,
+              builder: (_, value, __) =>
+                  Text("valor é ${valorAleatorio.value}"),
+            ),
+            CustomButtom(
+              onPressed: () => random(),
+              title: "Custom BTN",
+            ),
+          ],
         ),
       ),
     );
