@@ -16,7 +16,6 @@ class _OnePageState extends State<OnePage> {
   random() async {
     for (var i = 0; i < 10; i++) {
       await Future.delayed(Duration(seconds: 1));
-
       valorAleatorio.value = Random().nextInt(1000);
     }
   }
